@@ -1,0 +1,119 @@
+<form
+  [formGroup]="userForm"
+  class="form-container"
+  fxLayout="row"
+  fxLayoutAlign="center center"
+  (ngSubmit)="onSubmit()"
+>
+  <mat-card class="form">
+    <mat-card-title>Registro</mat-card-title>
+    <mat-slide-toggle (change)="toggleChanged($event.checked)"
+      >Es especialista?</mat-slide-toggle
+    >
+    <mat-card-content>
+      <mat-form-field>
+        <mat-label>Nombre</mat-label>
+        <input type="text" formControlName="nombre" required matInput />
+        <mat-error *ngIf="userForm.get('nombre')?.errors?.['required']">
+          El campo de debe tener datos
+        </mat-error>
+        <mat-error *ngIf="userForm.get('nombre')?.errors?.['pattern']">
+          El campo no puede tener numeros
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Apellido</mat-label>
+        <input type="text" formControlName="apellido" required matInput />
+        <mat-error *ngIf="userForm.get('apellido')?.errors?.['required']">
+          El campo de debe tener datos
+        </mat-error>
+        <mat-error *ngIf="userForm.get('apellido')?.errors?.['pattern']">
+          El campo no puede tener numeros
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Edad</mat-label>
+        <input type="text" formControlName="edad" required matInput />
+        <mat-error *ngIf="userForm.get('edad')?.errors?.['required']">
+          El campo de debe tener datos
+        </mat-error>
+        <mat-error *ngIf="userForm.get('edad')?.errors?.['pattern']">
+          El campo de debe tener datos numericos
+        </mat-error>
+        <mat-error *ngIf="userForm.get('edad')?.errors?.['min']">
+          debe ser mayor de 18
+        </mat-error>
+        <mat-error *ngIf="userForm.get('edad')?.errors?.['max']">
+          debe ser menor de 99
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>DNI</mat-label>
+        <input type="text" formControlName="dni" required matInput />
+        <mat-error *ngIf="userForm.get('dni')?.errors?.['required']">
+          El campo de debe tener datos
+        </mat-error>
+        <mat-error *ngIf="userForm.get('dni')?.errors?.['pattern']">
+          El campo de debe tener datos numericos
+        </mat-error>
+        <mat-error *ngIf="userForm.get('dni')?.errors?.['maxLength']">
+          debe tener 10 numeros el dni
+        </mat-error>
+        <mat-error *ngIf="userForm.get('dni')?.errors?.['minLength']">
+          debe tener 10 numeros el dni
+        </mat-error>
+      </mat-form-field>
+      <ng-container *ngIf="!toggleChecked">
+        <mat-form-field>
+          <mat-label>Obra social</mat-label>
+          <input type="text" formControlName="obrasocial" required matInput />
+          <mat-error *ngIf="userForm.get('obrasocial')?.errors?.['required']">
+            El campo de debe tener datos
+          </mat-error>
+        </mat-form-field>
+      </ng-container>
+      <ng-container *ngIf="toggleChecked">
+        <mat-form-field>
+          <mat-label>Especialidad</mat-label>
+          <input type="text" formControlName="especialidad" required matInput />
+        </mat-form-field>
+      </ng-container>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input type="email" formControlName="email" required matInput />
+        <mat-error *ngIf="userForm.get('email')?.errors?.['required']">
+          El campo de debe tener datos
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input type="password" formControlName="password" matInput />
+        <mat-error *ngIf="userForm.get('password')?.errors?.['required']">
+          El campo de debe tener datos
+        </mat-error>
+      </mat-form-field>
+      <div style="border: 3px solid black; margin-bottom: 10px">
+        <h2>Cargar Foto</h2>
+        <input
+          type="file"
+          formControlName="file"
+          (change)="onFileSelected($event)"
+        />
+      </div>
+    </mat-card-content>
+    <div class="botones-login">
+      <button
+        type="submit"
+        mat-raised-button
+        color="primary"
+        [disabled]="!userForm.valid"
+      >
+        Registrarse
+      </button>
+      <button mat-raised-button color="primary" (click)="irLogin()">
+        Volver a Login
+      </button>
+    </div>
+  </mat-card>
+</form>
