@@ -75,7 +75,11 @@
       <ng-container *ngIf="toggleChecked">
         <mat-form-field>
           <mat-label>Especialidad</mat-label>
-          <input type="text" formControlName="especialidad" required matInput />
+          <mat-select formControlName="especialidad">
+            <mat-option *ngFor="let esp of especialidadArr" [value]="esp.id">
+              {{ esp.especialidad }}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </ng-container>
       <mat-form-field>
@@ -115,5 +119,31 @@
         Volver a Login
       </button>
     </div>
+    <ng-container *ngIf="toggleChecked">
+      <div
+        style="
+          position: absolute;
+          top: 20px;
+          left: 650px;
+          border: 1px solid black;
+          width: 450px;
+        "
+      >
+        <h3>Agrega la Especialidad en caso de no aparecer</h3>
+        <mat-form-field style="padding: 0px !important">
+          <mat-label> Agrega la Especialidad </mat-label>
+          <input type="text" matInput formControlName="especialidadNueva" />
+        </mat-form-field>
+        <button
+          type="button"
+          mat-raised-button
+          color="primary"
+          style="margin: 0px !important"
+          (click)="agregarEspecialidad()"
+        >
+          Agregar Especialidad
+        </button>
+      </div>
+    </ng-container>
   </mat-card>
 </form>

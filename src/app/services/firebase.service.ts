@@ -30,7 +30,7 @@ export class FirebaseService {
   }
 
   getData(base: string) {
-    const usuarios = collection(this.firestore, 'users');
+    const usuarios = collection(this.firestore, base);
     return collectionData(usuarios);
   }
 

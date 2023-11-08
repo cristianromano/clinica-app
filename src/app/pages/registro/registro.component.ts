@@ -16,6 +16,11 @@ interface User {
   file: string;
 }
 
+interface Especialidad {
+  id: string;
+  especialidad: string;
+}
+
 @Component({
   selector: 'app-registro',
   templateUrl: './registro.component.html',
@@ -27,6 +32,8 @@ export class RegistroComponent {
   foto?: any;
   usuario: User[] = [];
   toggleChecked: boolean = false;
+  especialidadNueva?: string;
+  especialidadArr: Especialidad[] = [];
 
   constructor(
     private toast: ToastrService,
@@ -60,10 +67,13 @@ export class RegistroComponent {
       ]),
       file: new FormControl('', [Validators.required]),
       obrasocial: new FormControl('', [Validators.required]),
-      especialidad: new FormControl('', [Validators.required]),
+      especialidad: new FormControl(),
+      especialidadNueva: new FormControl(),
     });
   }
-  ngOnInit(): void {}
+  ngOnInit() {
+    this.getEspecialidades();
+  }
 
   onSubmit() {
     if (this.userForm.valid) {
@@ -113,5 +123,30 @@ export class RegistroComponent {
 
   toggleChanged(checked: boolean) {
     this.toggleChecked = checked;
+  }
+
+  agregarEspecialidad() {
+    let e = this.userForm.get('especialidadNueva')?.value;
+    if (e) {
+      const randomNumber = Math.floor(Math.random() * 900) + 100;
+      const data = {
+        id: randomNumber,
+        especialidad: e,
+      };
+      this.firestore.setData(data, 'especialidad');
+    }
+  }
+
+  getEspecialidades() {
+    this.firestore.getData('especialidad').subscribe((q) => {
+      this.especialidadArr = [];
+      q.forEach((element) => {
+        debugger;
+        this.especialidadArr.push({
+          id: element['id'],
+          especialidad: element['especialidad'],
+        });
+      });
+    });
   }
 }

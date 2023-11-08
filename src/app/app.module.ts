@@ -30,6 +30,8 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { AdminComponent } from './pages/admin/admin.component';
 import { MatTableModule } from '@angular/material/table';
 
+import { MatSelectModule } from '@angular/material/select';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,6 +58,7 @@ import { MatTableModule } from '@angular/material/table';
     MatSlideToggleModule,
     MatExpansionModule,
     MatTableModule,
+    MatSelectModule,
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
