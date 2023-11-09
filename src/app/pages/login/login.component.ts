@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { async } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirebaseService } from 'src/app/services/firebase.service';
 
@@ -26,22 +27,30 @@ export class LoginComponent {
   }
   ngOnInit(): void {}
 
-  onSubmit() {
-    if (this.userForm.valid) {
-      console.log(this.userForm.value);
-      this.login(
-        this.userForm.get('email')?.value,
-        this.userForm.get('password')?.value
-      )
-        .then((e) => {
-          this.authS.setUsuarioLogueado(true);
-          this.route.navigate(['/home']);
-        })
-        .catch((e) => {
-          console.log(e.error);
-        });
-      this.toast.show('Ingreso aceptado', 'Logueado con exito!!');
-      this.userForm.reset();
+  async onSubmit() {
+    try {
+      let verificado = await this.firestore.verificarEstado(
+        'users',
+        this.userForm.get('email')?.value
+      );
+
+      if (verificado) {
+        if (this.userForm.valid) {
+          this.login(
+            this.userForm.get('email')?.value,
+            this.userForm.get('password')?.value
+          ).then((e) => {
+            this.authS.setUsuarioLogueado(true);
+            this.toast.show('Ingreso aceptado', 'Logueado con exito!!');
+            this.userForm.reset();
+            this.route.navigate(['/home']);
+          });
+        }
+      } else {
+        this.toast.show('Ingreso denegado', 'Debe aprobarse la cuenta');
+      }
+    } catch (error) {
+      console.error('Ocurrió un error:', error);
     }
   }
 

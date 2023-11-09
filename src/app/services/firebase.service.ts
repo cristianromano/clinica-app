@@ -48,10 +48,45 @@ export class FirebaseService {
   }
 
   async actualizarDato(base: string, data: any) {
-    debugger;
     data.forEach((element: any) => {
       const instanciaDoc = doc(this.firestore, base, element.id);
       updateDoc(instanciaDoc, element);
+    });
+  }
+
+  // async verificarEstado(base: string, email: any) {
+  //   const usuarios = collection(this.firestore, base);
+  //   const user = collectionData(usuarios, { idField: 'id' }).subscribe((e) => {
+  //     let isVerified = false;
+  //     e.forEach((element: any) => {
+  //       debugger;
+  //       if (element.email == email) {
+  //         isVerified = true;
+  //       }
+  //     });
+  //     return isVerified;
+  //   });
+  // }
+
+  async verificarEstado(base: string, email: any) {
+    return new Promise((resolve, reject) => {
+      const usuarios = collection(this.firestore, base);
+      const user = collectionData(usuarios, { idField: 'id' }).subscribe(
+        (e) => {
+          let isVerified = false;
+          e.forEach((element: any) => {
+            if (element.email == email) {
+              if (element.verificado == true) {
+                isVerified = true;
+              }
+            }
+          });
+          resolve(isVerified); // Resuelve la promesa una vez que se completa la verificación
+        },
+        (error) => {
+          reject(error); // Rechaza la promesa si ocurre un error
+        }
+      );
     });
   }
 }
