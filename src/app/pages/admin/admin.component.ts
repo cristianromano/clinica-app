@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OnDisconnect } from '@angular/fire/database';
 import { updateDoc } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 import { Toast, ToastrService } from 'ngx-toastr';
 import { FirebaseService } from 'src/app/services/firebase.service';
 
@@ -15,7 +16,7 @@ export interface User {
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss'],
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent {
   displayedColumns: string[] = ['email', 'dni', 'imagen', 'especialidad'];
   dataSource: any;
   clickedRows = new Set<User>();
@@ -23,7 +24,8 @@ export class AdminComponent implements OnInit {
 
   constructor(
     private firebase: FirebaseService,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private route: Router
   ) {}
 
   ngOnInit(): void {
@@ -60,5 +62,9 @@ export class AdminComponent implements OnInit {
       .catch((e) => {
         this.toast.show(e.error);
       });
+  }
+
+  irAlta() {
+    this.route.navigate(['admin/alta']);
   }
 }

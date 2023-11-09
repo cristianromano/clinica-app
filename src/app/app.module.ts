@@ -31,6 +31,7 @@ import { AdminComponent } from './pages/admin/admin.component';
 import { MatTableModule } from '@angular/material/table';
 
 import { MatSelectModule } from '@angular/material/select';
+import { AdminModule } from './pages/admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -38,17 +39,16 @@ import { MatSelectModule } from '@angular/material/select';
     LoginComponent,
     NavbarComponent,
     RegistroComponent,
-    AdminComponent,
   ],
   imports: [
     LoginModule,
     RegistroModule,
+    AdminModule,
     BrowserModule,
     AppRoutingModule,
     MatFormFieldModule,
     MatCardModule,
     MatInputModule,
-    MatFormFieldModule,
     MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
