@@ -15,7 +15,7 @@ export class AuthService {
   usuarioLogueado$ = this.usuarioLogueadoSubject.asObservable();
 
   async loguearse(email: string, password: string) {
-    signInWithEmailAndPassword(this.auth, email, password);
+    return signInWithEmailAndPassword(this.auth, email, password);
   }
 
   async registrarse(email: string, password: string) {

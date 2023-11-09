@@ -61,4 +61,13 @@ export class LoginComponent {
   async login(email: string, password: string) {
     await this.authS.loguearse(email, password);
   }
+
+  loginRapido() {
+    this.authS.loguearse('cr@gmail.com', 'asdasd123').then((e) => {
+      console.log(e);
+      this.toast.show('Ingreso aceptado', 'Logueado con exito!!');
+      this.userForm.reset();
+      this.route.navigate(['/home']);
+    });
+  }
 }

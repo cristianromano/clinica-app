@@ -54,20 +54,6 @@ export class FirebaseService {
     });
   }
 
-  // async verificarEstado(base: string, email: any) {
-  //   const usuarios = collection(this.firestore, base);
-  //   const user = collectionData(usuarios, { idField: 'id' }).subscribe((e) => {
-  //     let isVerified = false;
-  //     e.forEach((element: any) => {
-  //       debugger;
-  //       if (element.email == email) {
-  //         isVerified = true;
-  //       }
-  //     });
-  //     return isVerified;
-  //   });
-  // }
-
   async verificarEstado(base: string, email: any) {
     return new Promise((resolve, reject) => {
       const usuarios = collection(this.firestore, base);
