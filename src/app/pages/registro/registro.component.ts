@@ -77,7 +77,6 @@ export class RegistroComponent {
   }
 
   onSubmit() {
-    debugger;
     if (this.userForm.valid) {
       const usuario = {
         nombre: this.userForm.get('nombre')?.value,
@@ -105,7 +104,6 @@ export class RegistroComponent {
             this.toast.show('Registrado', 'Registrado con exito');
             this.userForm.reset();
             this.file = null;
-            this.route.navigate(['/home']);
           });
         })
         .catch((e) => {

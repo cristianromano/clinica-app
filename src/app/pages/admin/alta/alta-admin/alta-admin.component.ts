@@ -65,7 +65,6 @@ export class AltaAdminComponent {
   ngOnInit() {}
 
   onSubmit() {
-    debugger;
     if (this.userForm.valid) {
       const usuario = {
         nombre: this.userForm.get('nombre')?.value,

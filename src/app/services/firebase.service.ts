@@ -15,6 +15,7 @@ import {
   doc,
   updateDoc,
   deleteDoc,
+  getDocs,
 } from '@angular/fire/firestore';
 import { environment } from '../environment/environment';
 
@@ -81,6 +82,25 @@ export class FirebaseService {
           reject(error); // Rechaza la promesa si ocurre un error
         }
       );
+    });
+  }
+
+  async verificarAdmin(base: string, email: any) {
+    const usuarios = collection(this.firestore, base);
+    const q = query(usuarios, where('email', '==', email));
+
+    const admin = collectionData(q, { idField: 'id' });
+    admin.subscribe((e) => {
+      if (e.length == 0) {
+        console.log('no es admin');
+        return false;
+      } else {
+        if (e[0]['admin'] == true) {
+          return true;
+        } else {
+          return false;
+        }
+      }
     });
   }
 }

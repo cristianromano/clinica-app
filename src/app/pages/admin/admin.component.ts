@@ -32,7 +32,7 @@ export class AdminComponent {
 
   ngOnInit(): void {
     this.dataSource = this.firebase.getDataEspecialistas('users');
-    console.log(this.dataSource);
+    this.firebase.verificarAdmin('admin', 'cr@gmail.com');
   }
 
   aprobarUsuario($event: any, row: any) {
@@ -71,7 +71,6 @@ export class AdminComponent {
   }
 
   desaprobarEspecialista() {
-    debugger;
     const usuarioVerificado: any[] = [];
     this.users.forEach((users: any) => {
       usuarioVerificado.push(users);

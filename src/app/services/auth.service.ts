@@ -30,8 +30,7 @@ export class AuthService {
 
   eliminarUsuario(data: any) {
     // data.forEach((res: { email: string }) => {
-    //   admin
-    //     .auth()
+    //   auth()
     //     .getUserByEmail(res.email)
     //     .then((e) => {
     //       console.log(e);
