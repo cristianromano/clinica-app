@@ -14,6 +14,7 @@ import {
   where,
   doc,
   updateDoc,
+  deleteDoc,
 } from '@angular/fire/firestore';
 import { environment } from '../environment/environment';
 
@@ -51,6 +52,13 @@ export class FirebaseService {
     data.forEach((element: any) => {
       const instanciaDoc = doc(this.firestore, base, element.id);
       updateDoc(instanciaDoc, element);
+    });
+  }
+
+  async eliminarDato(base: string, data: any) {
+    data.forEach((element: any) => {
+      const instanciaDoc = doc(this.firestore, base, element.id);
+      deleteDoc(instanciaDoc);
     });
   }
 

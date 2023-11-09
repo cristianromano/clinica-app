@@ -3,6 +3,7 @@ import { OnDisconnect } from '@angular/fire/database';
 import { updateDoc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { Toast, ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/services/auth.service';
 import { FirebaseService } from 'src/app/services/firebase.service';
 
 export interface User {
@@ -25,7 +26,8 @@ export class AdminComponent {
   constructor(
     private firebase: FirebaseService,
     private toast: ToastrService,
-    private route: Router
+    private route: Router,
+    private auth: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -66,5 +68,17 @@ export class AdminComponent {
 
   irAlta() {
     this.route.navigate(['admin/alta']);
+  }
+
+  desaprobarEspecialista() {
+    debugger;
+    const usuarioVerificado: any[] = [];
+    this.users.forEach((users: any) => {
+      usuarioVerificado.push(users);
+    });
+    this.auth.eliminarUsuario(usuarioVerificado);
+    // this.firebase.eliminarDato('users', usuarioVerificado).then((e) => {
+    //   this.toast.show('Eliminado de base datos', 'Eliminado con exito');
+    // });
   }
 }

@@ -3,6 +3,8 @@ import {
   Auth,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  deleteUser,
+  getAuth,
 } from '@angular/fire/auth';
 import { BehaviorSubject } from 'rxjs';
 
@@ -24,6 +26,18 @@ export class AuthService {
 
   setUsuarioLogueado(logueado: boolean) {
     this.usuarioLogueadoSubject.next(logueado);
+  }
+
+  eliminarUsuario(data: any) {
+    // data.forEach((res: { email: string }) => {
+    //   admin
+    //     .auth()
+    //     .getUserByEmail(res.email)
+    //     .then((e) => {
+    //       console.log(e);
+    //     });
+    // });
+    //admin.auth().deleteUser(user);
   }
 
   constructor() {}
