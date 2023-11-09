@@ -66,7 +66,7 @@
       <ng-container *ngIf="!toggleChecked">
         <mat-form-field>
           <mat-label>Obra social</mat-label>
-          <input type="text" formControlName="obrasocial" required matInput />
+          <input type="text" formControlName="obrasocial" matInput />
           <mat-error *ngIf="userForm.get('obrasocial')?.errors?.['required']">
             El campo de debe tener datos
           </mat-error>
@@ -76,7 +76,10 @@
         <mat-form-field>
           <mat-label>Especialidad</mat-label>
           <mat-select formControlName="especialidad">
-            <mat-option *ngFor="let esp of especialidadArr" [value]="esp.id">
+            <mat-option
+              *ngFor="let esp of especialidadArr"
+              [value]="esp.especialidad"
+            >
               {{ esp.especialidad }}
             </mat-option>
           </mat-select>

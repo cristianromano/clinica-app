@@ -14,6 +14,7 @@ interface User {
   edad: string;
   dni: string;
   file: string;
+  verificado: boolean;
 }
 
 interface Especialidad {
@@ -67,7 +68,7 @@ export class RegistroComponent {
       ]),
       file: new FormControl('', [Validators.required]),
       obrasocial: new FormControl('', [Validators.required]),
-      especialidad: new FormControl(),
+      especialidad: new FormControl('', [Validators.required]),
       especialidadNueva: new FormControl(),
     });
   }
@@ -76,6 +77,7 @@ export class RegistroComponent {
   }
 
   onSubmit() {
+    debugger;
     if (this.userForm.valid) {
       const usuario = {
         nombre: this.userForm.get('nombre')?.value,
@@ -85,6 +87,8 @@ export class RegistroComponent {
         edad: this.userForm.get('edad')?.value,
         dni: this.userForm.get('dni')?.value,
         imagen: '',
+        verificado: true,
+        especialidad: this.userForm.get('especialidad')?.value,
       };
       this.auth
         .registrarse(
@@ -93,6 +97,9 @@ export class RegistroComponent {
         )
         .then((e) => {
           this.uploadFile().then((e) => {
+            if (this.toggleChecked) {
+              usuario.verificado = false;
+            }
             usuario.imagen = this.foto;
             this.firestore.setData(usuario, 'users');
             this.toast.show('Registrado', 'Registrado con exito');
@@ -123,6 +130,13 @@ export class RegistroComponent {
 
   toggleChanged(checked: boolean) {
     this.toggleChecked = checked;
+    if (this.toggleChecked) {
+      this.userForm.patchValue({ obrasocial: 'no tiene' });
+      this.userForm.patchValue({ especialidad: '' });
+    } else {
+      this.userForm.patchValue({ obrasocial: '' });
+      this.userForm.patchValue({ especialidad: 'no tiene' });
+    }
   }
 
   agregarEspecialidad() {
@@ -141,7 +155,6 @@ export class RegistroComponent {
     this.firestore.getData('especialidad').subscribe((q) => {
       this.especialidadArr = [];
       q.forEach((element) => {
-        debugger;
         this.especialidadArr.push({
           id: element['id'],
           especialidad: element['especialidad'],

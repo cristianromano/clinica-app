@@ -11,6 +11,9 @@ import {
   query,
   Firestore,
   collectionData,
+  where,
+  doc,
+  updateDoc,
 } from '@angular/fire/firestore';
 import { environment } from '../environment/environment';
 
@@ -31,10 +34,24 @@ export class FirebaseService {
 
   getData(base: string) {
     const usuarios = collection(this.firestore, base);
-    return collectionData(usuarios);
+    return collectionData(usuarios, { idField: 'id' });
   }
 
   getUser() {
     return this.auth.currentUser?.email;
+  }
+
+  getDataEspecialistas(base: string) {
+    const usuarios = collection(this.firestore, base);
+    const q = query(usuarios, where('verificado', '==', false));
+    return collectionData(q, { idField: 'id' });
+  }
+
+  async actualizarDato(base: string, data: any) {
+    debugger;
+    data.forEach((element: any) => {
+      const instanciaDoc = doc(this.firestore, base, element.id);
+      updateDoc(instanciaDoc, element);
+    });
   }
 }

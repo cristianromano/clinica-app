@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { OnDisconnect } from '@angular/fire/database';
+import { updateDoc } from '@angular/fire/firestore';
+import { Toast, ToastrService } from 'ngx-toastr';
 import { FirebaseService } from 'src/app/services/firebase.service';
 
 export interface User {
@@ -14,22 +16,23 @@ export interface User {
   styleUrls: ['./admin.component.scss'],
 })
 export class AdminComponent implements OnInit {
-  displayedColumns: string[] = ['email', 'dni', 'imagen'];
+  displayedColumns: string[] = ['email', 'dni', 'imagen', 'especialidad'];
   dataSource: any;
   clickedRows = new Set<User>();
   users: any = [];
 
-  constructor(private firebase: FirebaseService) {}
+  constructor(
+    private firebase: FirebaseService,
+    private toast: ToastrService
+  ) {}
 
   ngOnInit(): void {
-    this.dataSource = this.firebase.getData('users');
+    this.dataSource = this.firebase.getDataEspecialistas('users');
     console.log(this.dataSource);
   }
 
   aprobarUsuario($event: any, row: any) {
     let entriesArray = Array.from($event);
-
-    debugger;
 
     const exists = this.users.some((user: any) => user.dni === row['dni']);
 
@@ -40,5 +43,22 @@ export class AdminComponent implements OnInit {
       this.users.push(row);
       this.clickedRows.add(row);
     }
+  }
+
+  aprobarEspecialista() {
+    console.log(this.users);
+    const usuarioVerificado: any[] = [];
+    this.users.forEach((users: any) => {
+      users.verificado = true;
+      usuarioVerificado.push(users);
+    });
+    this.firebase
+      .actualizarDato('users', usuarioVerificado)
+      .then((e) => {
+        this.toast.show('Se aprobo la solicitud');
+      })
+      .catch((e) => {
+        this.toast.show(e.error);
+      });
   }
 }
