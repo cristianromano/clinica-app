@@ -68,7 +68,10 @@ export class RegistroComponent {
       ]),
       file: new FormControl('', [Validators.required]),
       obrasocial: new FormControl('', [Validators.required]),
-      especialidad: new FormControl('', [Validators.required]),
+      especialidad: new FormControl(
+        '',
+        this.esRequerido ? Validators.required : null
+      ),
       especialidadNueva: new FormControl(),
     });
   }
@@ -159,5 +162,13 @@ export class RegistroComponent {
         });
       });
     });
+  }
+
+  get esRequerido(): boolean {
+    if (this.toggleChecked) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

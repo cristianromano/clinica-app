@@ -5,6 +5,7 @@ import {
   createUserWithEmailAndPassword,
   deleteUser,
   getAuth,
+  sendEmailVerification,
 } from '@angular/fire/auth';
 import { BehaviorSubject } from 'rxjs';
 
@@ -21,7 +22,9 @@ export class AuthService {
   }
 
   async registrarse(email: string, password: string) {
-    createUserWithEmailAndPassword(this.auth, email, password);
+    createUserWithEmailAndPassword(this.auth, email, password).then((e) => {
+      sendEmailVerification(e.user);
+    });
   }
 
   setUsuarioLogueado(logueado: boolean) {

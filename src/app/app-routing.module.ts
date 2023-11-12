@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { AdminComponent } from './pages/admin/admin.component';
+import { authGuard } from './guards/auth.guard';
+import { rutasGuard } from './guards/rutas.guard';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/bienvenida' },
@@ -14,11 +16,13 @@ const routes: Routes = [
     path: 'home',
     loadChildren: () =>
       import('./pages/home/home.module').then((m) => m.HomeModule),
+    canActivate: [rutasGuard],
   },
   {
     path: 'admin',
     loadChildren: () =>
       import('./pages/admin/admin.module').then((m) => m.AdminModule),
+    canActivate: [rutasGuard, authGuard],
   },
   {
     path: 'bienvenida',

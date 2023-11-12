@@ -36,15 +36,24 @@ export class LoginComponent {
 
       if (verificado) {
         if (this.userForm.valid) {
-          this.login(
-            this.userForm.get('email')?.value,
-            this.userForm.get('password')?.value
-          ).then((e) => {
-            this.authS.setUsuarioLogueado(true);
-            this.toast.show('Ingreso aceptado', 'Logueado con exito!!');
-            this.userForm.reset();
-            this.route.navigate(['/home']);
-          });
+          this.authS
+            .loguearse(
+              this.userForm.get('email')?.value,
+              this.userForm.get('password')?.value
+            )
+            .then((e) => {
+              if (e.user.emailVerified == true) {
+                this.authS.setUsuarioLogueado(true);
+                this.toast.show('Ingreso aceptado', 'Logueado con exito!!');
+                this.userForm.reset();
+                this.route.navigate(['/home']);
+              } else {
+                this.toast.show(
+                  'Ingreso denegado',
+                  'Debe verificar su correo electronico!'
+                );
+              }
+            });
         }
       } else {
         this.toast.show('Ingreso denegado', 'Debe aprobarse la cuenta');
@@ -58,10 +67,10 @@ export class LoginComponent {
     this.route.navigate(['/registro']);
   }
 
-  async login(email: string, password: string) {
+  /* async login(email: string, password: string) {
     await this.authS.loguearse(email, password);
   }
-
+*/
   loginRapido() {
     this.authS.loguearse('cr@gmail.com', 'asdasd123').then((e) => {
       console.log(e);

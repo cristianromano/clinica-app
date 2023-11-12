@@ -2,14 +2,17 @@ import { CanActivateFn } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { FirebaseService } from '../services/firebase.service';
 
-export const authGuard: CanActivateFn = (route, state) => {
-  // constructor(private auth:AuthService,private firestore:FirebaseService) {
+export const authGuard: CanActivateFn = async (route, state) => {
+  const authService = new AuthService();
+  const firestoreService = new FirebaseService();
+  const usuario = authService.auth.currentUser?.email;
 
-  // }
-
-  // const user = this.auth?.auth?.currentUser?.email;
-  // esAdmin = await this.firestore.verificarAdmin('admin', user);
-  // if (esAdmin) {
-  // }
-  return true;
+  const esAdmin = await firestoreService.verificarAdmin('admin', usuario);
+  if (esAdmin == true) {
+    console.log('es admin');
+    return true;
+  } else {
+    console.log('no es admin');
+    return false;
+  }
 };

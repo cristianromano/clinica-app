@@ -85,22 +85,24 @@ export class FirebaseService {
     });
   }
 
-  async verificarAdmin(base: string, email: any) {
-    const usuarios = collection(this.firestore, base);
-    const q = query(usuarios, where('email', '==', email));
+  async verificarAdmin(base: string, email: any): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      const usuarios = collection(this.firestore, base);
+      const q = query(usuarios, where('email', '==', email));
 
-    const admin = collectionData(q, { idField: 'id' });
-    admin.subscribe((e) => {
-      if (e.length == 0) {
-        console.log('no es admin');
-        return false;
-      } else {
-        if (e[0]['admin'] == true) {
-          return true;
+      const admin = collectionData(q, { idField: 'id' });
+      admin.subscribe((e) => {
+        if (e.length == 0) {
+          console.log('no es admin');
+          resolve(false);
         } else {
-          return false;
+          if (e[0]['admin'] == true) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
         }
-      }
+      });
     });
   }
 }
