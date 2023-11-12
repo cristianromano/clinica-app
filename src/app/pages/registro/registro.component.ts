@@ -102,6 +102,7 @@ export class RegistroComponent {
             if (this.toggleChecked) {
               usuario.verificado = false;
             }
+            this.auth.actualizarUsuario(this.foto);
             usuario.imagen = this.foto;
             this.firestore.setData(usuario, 'users');
             this.toast.show('Registrado', 'Registrado con exito');

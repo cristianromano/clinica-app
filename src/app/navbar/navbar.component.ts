@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatAccordion } from '@angular/material/expansion';
 import { AuthService } from '../services/auth.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FirebaseService } from '../services/firebase.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,9 +12,19 @@ import { ActivatedRoute } from '@angular/router';
 export class NavbarComponent implements OnInit {
   panelOpenState = false;
   usuarioLogueado: boolean = false;
-  constructor(private auth: AuthService, private route: ActivatedRoute) {
+  user: any;
+  admin: any;
+  constructor(
+    private auth: AuthService,
+    private route: Router,
+    private firebase: FirebaseService
+  ) {
     this.auth.usuarioLogueado$.subscribe((logueado) => {
       this.usuarioLogueado = logueado;
+    });
+    this.auth.usuario$.subscribe(async (e) => {
+      this.user = e;
+      this.admin = await this.firebase.verificarAdmin('admin', e?.email);
     });
   }
   ngOnInit(): void {}
@@ -23,6 +34,24 @@ export class NavbarComponent implements OnInit {
       this.usuarioLogueado = true;
     } else {
       this.usuarioLogueado = false;
+    }
+  }
+
+  logOut() {
+    this.auth.auth.signOut();
+    this.usuarioLogueado = false;
+    this.route.navigate(['/login']);
+  }
+
+  irAdmin() {
+    this.route.navigate(['/admin']);
+  }
+
+  irSegunLog() {
+    if (this.user) {
+      return '/home';
+    } else {
+      return '/';
     }
   }
 }

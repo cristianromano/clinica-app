@@ -7,6 +7,9 @@
 >
   <mat-card class="form">
     <mat-card-title>Login</mat-card-title>
+    <mat-slide-toggle (change)="toggleChanged($event.checked)"
+      >Es Admin?</mat-slide-toggle
+    >
     <mat-card-content>
       <mat-form-field>
         <mat-label>Email</mat-label>

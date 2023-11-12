@@ -14,6 +14,8 @@ import { FirebaseService } from 'src/app/services/firebase.service';
 export class LoginComponent {
   userForm!: FormGroup;
   auth?: any;
+  toggleChecked: boolean = false;
+  esAdmin: string = 'users';
   constructor(
     private toast: ToastrService,
     private firestore: FirebaseService,
@@ -30,10 +32,9 @@ export class LoginComponent {
   async onSubmit() {
     try {
       let verificado = await this.firestore.verificarEstado(
-        'users',
+        this.esAdmin,
         this.userForm.get('email')?.value
       );
-
       if (verificado) {
         if (this.userForm.valid) {
           this.authS
@@ -43,6 +44,7 @@ export class LoginComponent {
             )
             .then((e) => {
               if (e.user.emailVerified == true) {
+                this.authS.setUser(e.user);
                 this.authS.setUsuarioLogueado(true);
                 this.toast.show('Ingreso aceptado', 'Logueado con exito!!');
                 this.userForm.reset();
@@ -52,6 +54,7 @@ export class LoginComponent {
                   'Ingreso denegado',
                   'Debe verificar su correo electronico!'
                 );
+                this.authS.enviarMail(e.user);
               }
             });
         }
@@ -78,5 +81,14 @@ export class LoginComponent {
       this.userForm.reset();
       this.route.navigate(['/home']);
     });
+  }
+
+  toggleChanged(checked: boolean) {
+    this.toggleChecked = checked;
+    if (this.toggleChecked) {
+      this.esAdmin = 'admin';
+    } else {
+      this.esAdmin = 'users';
+    }
   }
 }

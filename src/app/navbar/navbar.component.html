@@ -1,15 +1,42 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <span>Clinica</span>
+    <span><a [routerLink]="irSegunLog()">Clinica</a> </span>
     <span class="example-spacer"></span>
-    <mat-expansion-panel class="panel-usuario" *ngIf="usuarioLogueado">
+    <mat-expansion-panel
+      class="panel-usuario"
+      *ngIf="usuarioLogueado"
+      style="width: 300px !important"
+    >
       <mat-expansion-panel-header>
-        <mat-panel-title> Personal data </mat-panel-title>
-        <mat-panel-description>
-          Type your name and age
-          <mat-icon>account_circle</mat-icon>
-        </mat-panel-description>
+        <mat-panel-title>
+          <img
+            [src]="user.photoURL"
+            alt="user"
+            srcset=""
+            style="height: 50px; width: 50px; border-radius: 40px"
+          />
+        </mat-panel-title>
+        <mat-panel-description> Informacion de usuario </mat-panel-description>
       </mat-expansion-panel-header>
+      <div class="botonesPanel">
+        <p>Usuario: {{ user.email }}</p>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="irAdmin()"
+          *ngIf="admin"
+        >
+          Portal Admin
+        </button>
+        <button
+          mat-raised-button
+          color="warn"
+          (click)="logOut()"
+          style="margin-top: 5px"
+        >
+          Salir
+        </button>
+      </div>
     </mat-expansion-panel>
   </mat-toolbar-row>
 </mat-toolbar>

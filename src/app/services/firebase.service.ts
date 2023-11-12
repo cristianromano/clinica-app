@@ -71,8 +71,12 @@ export class FirebaseService {
           let isVerified = false;
           e.forEach((element: any) => {
             if (element.email == email) {
-              if (element.verificado == true) {
+              if (base == 'admin') {
                 isVerified = true;
+              } else {
+                if (element.verificado == true) {
+                  isVerified = true;
+                }
               }
             }
           });
