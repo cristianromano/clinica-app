@@ -16,7 +16,6 @@ import { ReactiveFormsModule } from '@angular/forms';
   declarations: [AdminComponent, AltaAdminComponent],
   imports: [
     CommonModule,
-    BrowserModule,
     AdminRoutingModule,
     MatTableModule,
     MatSelectModule,

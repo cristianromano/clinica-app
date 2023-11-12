@@ -32,18 +32,16 @@ import { MatTableModule } from '@angular/material/table';
 
 import { MatSelectModule } from '@angular/material/select';
 import { AdminModule } from './pages/admin/admin.module';
+import { BienvenidaModule } from './pages/bienvenida/bienvenida.module';
+import { BienvenidaComponent } from './pages/bienvenida/bienvenida.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    NavbarComponent,
-    RegistroComponent,
-  ],
+  declarations: [AppComponent, NavbarComponent],
   imports: [
+    BienvenidaModule,
+    AdminModule,
     LoginModule,
     RegistroModule,
-    AdminModule,
     BrowserModule,
     AppRoutingModule,
     MatFormFieldModule,

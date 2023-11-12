@@ -4,7 +4,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { AdminComponent } from './pages/admin/admin.component';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/login' },
+  { path: '', pathMatch: 'full', redirectTo: '/bienvenida' },
   {
     path: 'registro',
     loadChildren: () =>
@@ -17,7 +17,20 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    component: AdminComponent,
+    loadChildren: () =>
+      import('./pages/admin/admin.module').then((m) => m.AdminModule),
+  },
+  {
+    path: 'bienvenida',
+    loadChildren: () =>
+      import('./pages/bienvenida/bienvenida.module').then(
+        (m) => m.BienvenidaModule
+      ),
+  },
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./pages/login/login.module').then((m) => m.LoginModule),
   },
 ];
 

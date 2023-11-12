@@ -15,9 +15,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
-  declarations: [],
+  declarations: [RegistroComponent],
   imports: [
     CommonModule,
     RegistroRoutingModule,
@@ -30,6 +31,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     MatProgressBarModule,
     MatToolbarModule,
     MatIconModule,
+    MatSelectModule,
     MatSlideToggleModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
