@@ -32,7 +32,6 @@ export class AdminComponent {
 
   ngOnInit(): void {
     this.dataSource = this.firebase.getDataEspecialistas('users');
-    this.firebase.verificarAdmin('admin', 'cr@gmail.com');
   }
 
   aprobarUsuario($event: any, row: any) {

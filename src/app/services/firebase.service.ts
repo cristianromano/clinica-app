@@ -91,22 +91,26 @@ export class FirebaseService {
 
   async verificarAdmin(base: string, email: any): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      const usuarios = collection(this.firestore, base);
-      const q = query(usuarios, where('email', '==', email));
+      if (email) {
+        const usuarios = collection(this.firestore, base);
+        const q = query(usuarios, where('email', '==', email));
 
-      const admin = collectionData(q, { idField: 'id' });
-      admin.subscribe((e) => {
-        if (e.length == 0) {
-          console.log('no es admin');
-          resolve(false);
-        } else {
-          if (e[0]['admin'] == true) {
-            resolve(true);
-          } else {
+        const admin = collectionData(q, { idField: 'id' });
+        admin.subscribe((e) => {
+          if (e.length == 0) {
+            console.log('no es admin');
             resolve(false);
+          } else {
+            if (e[0]['admin'] == true) {
+              resolve(true);
+            } else {
+              resolve(false);
+            }
           }
-        }
-      });
+        });
+      } else {
+        resolve(false);
+      }
     });
   }
 }

@@ -11,9 +11,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { AltaAdminComponent } from './alta/alta-admin/alta-admin.component';
 import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.component';
 
 @NgModule({
-  declarations: [AdminComponent, AltaAdminComponent],
+  declarations: [AdminComponent, AltaAdminComponent, ListaUsuariosComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

@@ -27,9 +27,10 @@
 }
 
 .center-div {
-  position: absolute;
-  top: 300px;
-  right: 800px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: 30px;
+  justify-content: flex-start;
 }
 
 .botones {
@@ -39,4 +40,10 @@
   justify-content: space-around;
   align-items: center;
   align-content: normal;
+}
+
+.table-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
