@@ -34,6 +34,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { AdminModule } from './pages/admin/admin.module';
 import { BienvenidaModule } from './pages/bienvenida/bienvenida.module';
 import { BienvenidaComponent } from './pages/bienvenida/bienvenida.component';
+import { HomeModule } from './pages/home/home.module';
 
 @NgModule({
   declarations: [AppComponent, NavbarComponent],

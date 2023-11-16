@@ -18,6 +18,15 @@ import {
   getDocs,
 } from '@angular/fire/firestore';
 import { environment } from '../environment/environment';
+import { Observable } from 'rxjs';
+
+interface Especialista {
+  id: string;
+  email: string;
+  especialidad: string;
+  imagen: string;
+  // Agrega otras propiedades según tus datos
+}
 
 @Injectable({
   providedIn: 'root',
@@ -47,6 +56,16 @@ export class FirebaseService {
     const usuarios = collection(this.firestore, base);
     const q = query(usuarios, where('verificado', '==', false));
     return collectionData(q, { idField: 'id' });
+  }
+
+  getDataEspecialistasVerificados(base: string): Observable<Especialista[]> {
+    const usuarios = collection(this.firestore, base);
+    const q = query(
+      usuarios,
+      where('verificado', '==', true),
+      where('especialidad', '!=', '')
+    );
+    return collectionData(q, { idField: 'id' }) as Observable<Especialista[]>;
   }
 
   async actualizarDato(base: string, data: any) {

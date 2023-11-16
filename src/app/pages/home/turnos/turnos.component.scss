@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  min-height: 93.3vh;
+  //   background: url("../../../assets/medico.png") no-repeat center center fixed;
+  //   background-size: cover;
+}
+
+.inner-container {
+  display: flex;
+
+  border: 10px solid black;
+}
+
+.demo-inline-calendar-card {
+  width: 300px;
+}
