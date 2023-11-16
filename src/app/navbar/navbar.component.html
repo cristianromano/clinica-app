@@ -8,9 +8,9 @@
       style="width: 300px !important"
     >
       <mat-expansion-panel-header>
-        <mat-panel-title>
+        <mat-panel-title *ngFor="let item of user">
           <img
-            [src]="user.photoURL"
+            src="{{ item.imagen }}"
             alt="user"
             srcset=""
             style="height: 50px; width: 50px; border-radius: 40px"
@@ -18,8 +18,9 @@
         </mat-panel-title>
         <mat-panel-description> Informacion de usuario </mat-panel-description>
       </mat-expansion-panel-header>
-      <div class="botonesPanel">
-        <p>Usuario: {{ user.email }}</p>
+      <div class="botonesPanel" *ngFor="let item of user">
+        <p>Bienvenido {{ item.nombre }} {{ item.apellido }}!!</p>
+
         <button
           mat-raised-button
           color="primary"

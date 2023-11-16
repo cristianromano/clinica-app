@@ -23,7 +23,10 @@ export class NavbarComponent implements OnInit {
       this.usuarioLogueado = logueado;
     });
     this.auth.usuario$.subscribe(async (e) => {
-      this.user = e;
+      this.firebase.getUser().subscribe((e) => {
+        this.user = e;
+        debugger;
+      });
       this.admin = await this.firebase.verificarAdmin('admin', e?.email);
     });
   }

@@ -35,6 +35,7 @@ export class RegistroComponent {
   toggleChecked: boolean = false;
   especialidadNueva?: string;
   especialidadArr: Especialidad[] = [];
+  captchaResponse?: string;
 
   constructor(
     private toast: ToastrService,
@@ -69,10 +70,11 @@ export class RegistroComponent {
       file: new FormControl('', [Validators.required]),
       obrasocial: new FormControl('', [Validators.required]),
       especialidad: new FormControl(
-        '',
+        'null',
         this.esRequerido ? Validators.required : null
       ),
       especialidadNueva: new FormControl(),
+      captchaResponse: new FormControl('', [Validators.required]),
     });
   }
   ngOnInit() {
@@ -171,5 +173,10 @@ export class RegistroComponent {
     } else {
       return false;
     }
+  }
+
+  resolved(captcha: string) {
+    this.captchaResponse = captcha;
+    this.userForm.controls['captchaResponse'].setValue(this.captchaResponse);
   }
 }

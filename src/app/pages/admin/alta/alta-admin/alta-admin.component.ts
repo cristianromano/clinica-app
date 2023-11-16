@@ -83,6 +83,7 @@ export class AltaAdminComponent {
         )
         .then((e) => {
           this.uploadFile().then((e) => {
+            this.auth.actualizarUsuario(this.foto);
             usuario.imagen = this.foto;
             this.firestore.setData(usuario, 'admin');
             this.toast.show('Registrado', 'Registrado con exito');

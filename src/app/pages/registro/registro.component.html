@@ -109,12 +109,18 @@
         />
       </div>
     </mat-card-content>
+    <re-captcha
+      (resolved)="resolved($event)"
+      siteKey="6LdpHxIpAAAAAH-zYajIe3KgGwpte23vuDHQixJK"
+      formControlName="captchaResponse"
+      style="position: absolute; top: 150px; left: 540px"
+    ></re-captcha>
     <div class="botones-login">
       <button
         type="submit"
         mat-raised-button
         color="primary"
-        [disabled]="!userForm.valid"
+        [disabled]="!userForm.valid || !userForm.get('captchaResponse')?.value"
       >
         Registrarse
       </button>

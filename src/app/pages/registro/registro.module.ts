@@ -16,7 +16,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
-
+import { RecaptchaModule } from 'ng-recaptcha';
 @NgModule({
   declarations: [RegistroComponent],
   imports: [
@@ -32,6 +32,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatToolbarModule,
     MatIconModule,
     MatSelectModule,
+    RecaptchaModule,
     MatSlideToggleModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',

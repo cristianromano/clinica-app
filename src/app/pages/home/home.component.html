@@ -1,1 +1,3 @@
-<button mat-raised-button color="primary" (click)="irTurno()">TURNOS</button>
+<button mat-raised-button color="primary" (click)="irTurno()" *ngIf="userComun">
+  TURNOS
+</button>

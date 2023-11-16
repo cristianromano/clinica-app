@@ -5,6 +5,8 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { TurnosModule } from './turnos/turnos.module';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -12,6 +14,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     CommonModule,
     HomeRoutingModule,
     TurnosModule,
+    MatInputModule,
+    MatButtonModule,
     MatNativeDateModule,
     MatDatepickerModule,
   ],
