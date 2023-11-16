@@ -1,5 +1,6 @@
 import { DEFAULT_INTERPOLATION_CONFIG } from '@angular/compiler';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { disableDebugTools } from '@angular/platform-browser';
 import { FirebaseService } from 'src/app/services/firebase.service';
@@ -22,6 +23,7 @@ export class ListaEspecialistaComponent {
   displayedColumns: string[] = ['email', 'especialidad', 'imagen'];
   clickedRows = new Set<Especialista>();
   users: any = [];
+  @Output() especialista = new EventEmitter<void>();
 
   ngOnInit(): void {
     this.firestore
@@ -48,6 +50,7 @@ export class ListaEspecialistaComponent {
 
   gestionarTurno($event: any, row: any) {
     let entriesArray = Array.from($event);
+    this.especialista.emit(row);
     const exists = this.users.some((user: any) => user.dni === row['dni']);
     if (exists) {
       this.users = this.users.filter((user: any) => user.dni !== row['dni']);

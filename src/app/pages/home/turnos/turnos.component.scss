@@ -8,11 +8,16 @@
 }
 
 .inner-container {
-  display: flex;
-
-  border: 10px solid black;
+  width: 50%;
 }
 
 .demo-inline-calendar-card {
   width: 300px;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  gap: 16px; /* Espacio entre la lista y el calendario */
+  border: 5px solid black;
 }

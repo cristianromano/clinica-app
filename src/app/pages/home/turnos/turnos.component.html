@@ -1,8 +1,29 @@
-<div class="container">
-  <div class="inner-container">
-    <app-lista-especialista></app-lista-especialista>
-    <mat-card class="demo-inline-calendar-card">
-      <mat-calendar [(selected)]="selected"></mat-calendar>
-    </mat-card>
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <div class="container">
+    <div class="inner-container">
+      <div class="flex-container">
+        <app-lista-especialista
+          (especialista)="obtenerEspecialista($event)"
+        ></app-lista-especialista>
+        <mat-card class="demo-inline-calendar-card">
+          <mat-calendar
+            [(selected)]="selected"
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            formControlName="fecha"
+            (selectedChange)="handleDateChange($event)"
+          ></mat-calendar>
+        </mat-card>
+      </div>
+      <button
+        type="submit"
+        mat-raised-button
+        color="primary"
+        [disabled]="!userForm.valid"
+        style="margin: 16px"
+      >
+        Pedir Turno
+      </button>
+    </div>
   </div>
-</div>
+</form>
