@@ -74,9 +74,6 @@ export class AdminComponent {
     this.users.forEach((users: any) => {
       usuarioVerificado.push(users);
     });
-    this.auth.eliminarUsuario(usuarioVerificado);
-    // this.firebase.eliminarDato('users', usuarioVerificado).then((e) => {
-    //   this.toast.show('Eliminado de base datos', 'Eliminado con exito');
-    // });
+    this.firebase.eliminarDato('users', usuarioVerificado);
   }
 }

@@ -9,6 +9,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./turnos/turnos.module').then((m) => m.TurnosModule),
   },
+  {
+    path: 'turnos/especialista',
+    loadChildren: () =>
+      import('./turnos-especialista/turnos-especialista.module').then(
+        (m) => m.TurnosEspecialistaModule
+      ),
+  },
 ];
 
 @NgModule({

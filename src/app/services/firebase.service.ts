@@ -55,6 +55,15 @@ export class FirebaseService {
     return collectionData(q, { idField: 'id' });
   }
 
+  getAdmin() {
+    const usuarios = collection(this.firestore, 'admin');
+    const q = query(
+      usuarios,
+      where('email', '==', this.auth.currentUser?.email)
+    );
+    return collectionData(q, { idField: 'id' });
+  }
+
   getDataEspecialistas(base: string) {
     const usuarios = collection(this.firestore, base);
     const q = query(usuarios, where('verificado', '==', false));

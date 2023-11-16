@@ -44,7 +44,7 @@ export class LoginComponent {
             )
             .then((e) => {
               if (e.user.emailVerified == true) {
-                this.authS.setUser(e.user);
+                //this.authS.setUser(e.user);
                 this.authS.setUsuarioLogueado(true);
                 this.toast.show('Ingreso aceptado', 'Logueado con exito!!');
                 this.userForm.reset();

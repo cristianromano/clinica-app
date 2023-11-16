@@ -23,11 +23,16 @@ export class NavbarComponent implements OnInit {
       this.usuarioLogueado = logueado;
     });
     this.auth.usuario$.subscribe(async (e) => {
-      this.firebase.getUser().subscribe((e) => {
-        this.user = e;
-        debugger;
-      });
-      this.admin = await this.firebase.verificarAdmin('admin', e?.email);
+      this.admin = e;
+      if (this.admin[0].admin == true) {
+        this.firebase.getAdmin().subscribe((e) => {
+          this.user = e;
+        });
+      } else {
+        this.firebase.getUser().subscribe((e) => {
+          this.user = e;
+        });
+      }
     });
   }
   ngOnInit(): void {}
