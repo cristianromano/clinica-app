@@ -38,9 +38,7 @@ export class FirebaseService {
   constructor() {}
 
   async setData(data: any, base: string) {
-    addDoc(collection(this.firestore, base), data).then((e) => {
-      console.log('ok');
-    });
+    addDoc(collection(this.firestore, base), data);
   }
 
   getData(base: string) {
