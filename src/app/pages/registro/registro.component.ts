@@ -36,6 +36,7 @@ export class RegistroComponent {
   especialidadNueva?: string;
   especialidadArr: Especialidad[] = [];
   captchaResponse?: string;
+  fotoUser?: string;
 
   constructor(
     private toast: ToastrService,
@@ -143,6 +144,16 @@ export class RegistroComponent {
     }
   }
 
+  cambiarRegistro(valor: boolean) {
+    this.toggleChecked = valor;
+    if (this.toggleChecked) {
+      this.userForm.patchValue({ obrasocial: 'no tiene' });
+      this.userForm.patchValue({ especialidad: '' });
+    } else {
+      this.userForm.patchValue({ obrasocial: '' });
+      this.userForm.patchValue({ especialidad: 'no tiene' });
+    }
+  }
   agregarEspecialidad() {
     let e = this.userForm.get('especialidadNueva')?.value;
     if (e) {

@@ -22,18 +22,20 @@ export class HomeComponent implements OnInit {
           this.userComun = true;
         }
       } else {
-        this.firebase
-          .verificarAdmin('admin', this.auth.auth.currentUser?.email)
-          .then((e) => {
-            this.esAdmin = e;
-            this.firebase.getAdmin().subscribe((e) => {
-              this.admin = e;
-              this.auth.setUser(this.admin);
-              if (this.esAdmin == true) {
-                this.userComun = true;
-              }
+        if (this.auth.auth.currentUser?.email) {
+          this.firebase
+            .verificarAdmin('admin', this.auth.auth.currentUser?.email)
+            .then((e) => {
+              this.esAdmin = e;
+              this.firebase.getAdmin().subscribe((e) => {
+                this.admin = e;
+                this.auth.setUser(this.admin[0]);
+                if (this.esAdmin == true) {
+                  this.userComun = true;
+                }
+              });
             });
-          });
+        }
       }
     });
   }

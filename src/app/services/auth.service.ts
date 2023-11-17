@@ -9,7 +9,7 @@ import {
   User,
   updateProfile,
 } from '@angular/fire/auth';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -17,10 +17,10 @@ import { BehaviorSubject } from 'rxjs';
 export class AuthService {
   public auth: Auth = inject(Auth);
   private usuarioLogueadoSubject = new BehaviorSubject<boolean>(false);
-  private getUser = new BehaviorSubject<User | null>(null);
+  private getUser = new ReplaySubject<any | null>(1);
   usuarioLogueado$ = this.usuarioLogueadoSubject.asObservable();
   usuario$ = this.getUser.asObservable();
-
+  us: any;
   async loguearse(email: string, password: string) {
     return signInWithEmailAndPassword(this.auth, email, password);
   }
@@ -53,8 +53,10 @@ export class AuthService {
     sendEmailVerification(user);
   }
 
-  setUser(user: User | null) {
-    this.getUser.next(user);
+  setUser(user: any | null) {
+    if (user != null) {
+      this.getUser.next(user);
+    }
   }
 
   actualizarUsuario(foto: any) {

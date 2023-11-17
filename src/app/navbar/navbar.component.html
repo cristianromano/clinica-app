@@ -8,7 +8,7 @@
       style="width: 300px !important"
     >
       <mat-expansion-panel-header>
-        <mat-panel-title *ngFor="let item of user">
+        <mat-panel-title *ngFor="let item of usuarioArr">
           <img
             src="{{ item.imagen }}"
             alt="user"
@@ -18,14 +18,14 @@
         </mat-panel-title>
         <mat-panel-description> Informacion de usuario </mat-panel-description>
       </mat-expansion-panel-header>
-      <div class="botonesPanel" *ngFor="let item of user">
+      <div class="botonesPanel" *ngFor="let item of usuarioArr">
         <p>Bienvenido {{ item.nombre }} {{ item.apellido }}!!</p>
 
         <button
           mat-raised-button
           color="primary"
           (click)="irAdmin()"
-          *ngIf="admin"
+          *ngIf="esAdmin"
         >
           Portal Admin
         </button>

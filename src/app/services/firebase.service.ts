@@ -47,11 +47,10 @@ export class FirebaseService {
   }
 
   getUser() {
+    const email = this.auth.currentUser?.email;
     const usuarios = collection(this.firestore, 'users');
-    const q = query(
-      usuarios,
-      where('email', '==', this.auth.currentUser?.email)
-    );
+    const q = query(usuarios, where('email', '==', email));
+
     return collectionData(q, { idField: 'id' });
   }
 

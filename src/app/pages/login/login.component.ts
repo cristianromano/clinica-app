@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+import { signInWithEmailAndPassword } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { async } from 'rxjs';
+import { Subscription } from 'rxjs';
+
 import { AuthService } from 'src/app/services/auth.service';
 import { FirebaseService } from 'src/app/services/firebase.service';
 
@@ -16,6 +18,13 @@ export class LoginComponent {
   auth?: any;
   toggleChecked: boolean = false;
   esAdmin: string = 'users';
+  pacientes: any = [];
+  especialistas: any = [];
+  admin: any = [];
+
+  private usersSubscription?: Subscription;
+  private adminSubscription?: Subscription;
+
   constructor(
     private toast: ToastrService,
     private firestore: FirebaseService,
@@ -27,7 +36,48 @@ export class LoginComponent {
       password: new FormControl('', [Validators.required]),
     });
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.especialistas = [];
+    this.admin = [];
+    this.pacientes = [];
+
+    this.adminSubscription = this.firestore.getData('admin').subscribe((e) => {
+      e.forEach((element) => {
+        if (this.admin.length < 1 && !this.admin.includes(element)) {
+          this.admin.push(element);
+        }
+      });
+    });
+
+    this.usersSubscription = this.firestore.getData('users').subscribe((e) => {
+      e.forEach((element) => {
+        if (element['especialidad'] == 'null' && this.pacientes.length < 3) {
+          this.pacientes.push(element);
+        }
+        if (
+          element['especialidad'] != '' &&
+          element['especialidad'] != 'null' &&
+          this.especialistas.length < 2
+        ) {
+          this.especialistas.push(element);
+        }
+      });
+      this.especialistas = this.especialistas.slice(0, 2);
+      console.log(this.especialistas);
+      console.log(this.pacientes);
+    });
+  }
+
+  ngOnDestroy() {
+    // Desuscribirse para evitar fugas de memoria
+    if (this.adminSubscription) {
+      this.adminSubscription.unsubscribe();
+    }
+
+    if (this.usersSubscription) {
+      this.usersSubscription.unsubscribe();
+    }
+  }
 
   async onSubmit() {
     try {
@@ -45,7 +95,7 @@ export class LoginComponent {
             .then((e) => {
               if (e.user.emailVerified == true) {
                 //this.authS.setUser(e.user);
-                this.authS.setUsuarioLogueado(true);
+                //this.authS.setUsuarioLogueado(true);
                 this.toast.show('Ingreso aceptado', 'Logueado con exito!!');
                 this.userForm.reset();
                 this.route.navigate(['/home']);
@@ -90,5 +140,32 @@ export class LoginComponent {
     } else {
       this.esAdmin = 'users';
     }
+  }
+
+  accederAdmin(item: any) {
+    this.authS.loguearse(item.email, item.password).then((e) => {
+      console.log(e);
+      this.toast.show('Ingreso aceptado', 'Logueado con exito!!');
+      this.userForm.reset();
+      this.route.navigate(['/home']);
+    });
+  }
+
+  accederEspecialista(item: any) {
+    this.authS.loguearse(item.email, item.password).then((e) => {
+      console.log(e);
+      this.toast.show('Ingreso aceptado', 'Logueado con exito!!');
+      this.userForm.reset();
+      this.route.navigate(['/home']);
+    });
+  }
+
+  accederPaciente(item: any) {
+    this.authS.loguearse(item.email, item.password).then((e) => {
+      console.log(e);
+      this.toast.show('Ingreso aceptado', 'Logueado con exito!!');
+      this.userForm.reset();
+      this.route.navigate(['/home']);
+    });
   }
 }

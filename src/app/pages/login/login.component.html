@@ -50,3 +50,58 @@
     </div>
   </mat-card>
 </form>
+<div
+  style="
+    position: absolute;
+    top: 90px;
+    left: 100px;
+    border: 1px solid black;
+    max-width: 300px;
+  "
+>
+  <div
+    style="
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    "
+  >
+    <div>
+      <button
+        type="button"
+        mat-raised-button
+        color="primary"
+        *ngFor="let ad of admin"
+        style="width: 100%"
+        (click)="accederAdmin(ad)"
+      >
+        <img [src]="ad.imagen" style="height: 50px; width: 50px" />
+      </button>
+    </div>
+    <div>
+      <button
+        type="button"
+        mat-raised-button
+        color="accent"
+        style="width: 100%"
+        (click)="accederEspecialista(esp)"
+        *ngFor="let esp of especialistas"
+      >
+        <img [src]="esp.imagen" style="height: 50px; width: 50px" />
+      </button>
+    </div>
+    <div>
+      <button
+        type="button"
+        mat-raised-button
+        color="warn"
+        style="width: 100%"
+        (click)="accederPaciente(pacientes)"
+        *ngFor="let pacientes of pacientes"
+      >
+        <img [src]="pacientes.imagen" style="height: 50px; width: 50px" />
+      </button>
+    </div>
+  </div>
+</div>

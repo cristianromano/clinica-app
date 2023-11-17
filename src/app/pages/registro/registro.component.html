@@ -7,9 +7,9 @@
 >
   <mat-card class="form">
     <mat-card-title>Registro</mat-card-title>
-    <mat-slide-toggle (change)="toggleChanged($event.checked)"
+    <!-- <mat-slide-toggle (change)="toggleChanged($event.checked)"
       >Es especialista?</mat-slide-toggle
-    >
+    > -->
     <mat-card-content>
       <mat-form-field>
         <mat-label>Nombre</mat-label>
@@ -113,7 +113,7 @@
       (resolved)="resolved($event)"
       siteKey="6LdpHxIpAAAAAH-zYajIe3KgGwpte23vuDHQixJK"
       formControlName="captchaResponse"
-      style="position: absolute; top: 150px; left: 540px"
+      style="position: absolute; top: 190px; left: 540px"
     ></re-captcha>
     <div class="botones-login">
       <button
@@ -156,3 +156,32 @@
     </ng-container>
   </mat-card>
 </form>
+<div>
+  <h4 style="position: absolute; top: 70px; left: 230px; height: 150px">
+    Eliga usuario
+  </h4>
+  <img
+    src="../../../assets/doctor.png"
+    style="
+      position: absolute;
+      top: 90px;
+      left: 100px;
+      height: 150px;
+      border: 1px solid palevioletred;
+      background-color: palevioletred;
+    "
+    (click)="cambiarRegistro(true)"
+  />
+  <img
+    src="../../../assets/person.png"
+    style="
+      position: absolute;
+      top: 90px;
+      left: 300px;
+      height: 150px;
+      border: 1px solid coral;
+      background-color: firebrick;
+    "
+    (click)="cambiarRegistro(false)"
+  />
+</div>
