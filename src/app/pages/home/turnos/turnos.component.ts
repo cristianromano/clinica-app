@@ -54,6 +54,7 @@ export class TurnosComponent implements OnInit {
       id_especialista: this.especialista.id,
       especialista: this.especialista.email,
       especialidad: this.especialista.especialidad,
+      estado: 'inactivo',
       fecha: this.userForm.get('fecha')?.value,
     };
     this.firestore.setData(data, 'turno').then((e) => {

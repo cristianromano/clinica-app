@@ -28,6 +28,14 @@ interface Especialista {
   // Agrega otras propiedades según tus datos
 }
 
+interface Turnos {
+  id_especialista: string;
+  especialista: string;
+  especialidad: string;
+  paciente: string;
+  // Agrega otras propiedades según tus datos
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -77,6 +85,12 @@ export class FirebaseService {
       where('especialidad', '!=', '')
     );
     return collectionData(q, { idField: 'id' }) as Observable<Especialista[]>;
+  }
+
+  getDataTurnos(base: string): Observable<Turnos[]> {
+    const usuarios = collection(this.firestore, base);
+    const q = query(usuarios, where('estado', '==', 'inactivo'));
+    return collectionData(q, { idField: 'id' }) as Observable<Turnos[]>;
   }
 
   async actualizarDato(base: string, data: any) {
