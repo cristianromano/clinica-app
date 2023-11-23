@@ -12,7 +12,8 @@ type TipoOriginal = {
   especialidad: any;
   estado: string | undefined;
   comentario: any;
-  estrellas?: number; // Hacemos 'estrellas' opcional
+  estrellas?: number;
+  diagnostico?: string;
 };
 
 @Component({
@@ -74,6 +75,9 @@ export class TurnosEspecialistaComponent implements OnInit {
         {
           ...data[0],
           estrellas: this.selectedStar,
+          diagnostico: this.userForm.get('diagnostico')?.value
+            ? this.userForm.get('diagnostico')?.value
+            : '',
         },
       ];
     }
@@ -84,6 +88,8 @@ export class TurnosEspecialistaComponent implements OnInit {
     });
 
     this.userForm.removeControl('comentario');
+    this.userForm.removeControl('diagnostico');
+    this.userForm.get('diagnostico')?.setValue('');
     this.userForm.get('comentario')?.setValue('');
     this.estado = 'inactivo';
   }
@@ -97,6 +103,10 @@ export class TurnosEspecialistaComponent implements OnInit {
     this.estado = 'finalizado';
     this.userForm.addControl(
       'comentario',
+      new FormControl(null, [Validators.required])
+    );
+    this.userForm.addControl(
+      'diagnostico',
       new FormControl(null, [Validators.required])
     );
   }

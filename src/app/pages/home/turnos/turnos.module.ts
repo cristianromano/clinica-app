@@ -12,8 +12,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { ListaEspecialistaComponent } from './lista-especialista/lista-especialista.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.component';
+import { ListaTurnosComponent } from './lista-turnos/lista-turnos.component';
+
 @NgModule({
-  declarations: [TurnosComponent, ListaEspecialistaComponent],
+  declarations: [TurnosComponent, ListaEspecialistaComponent, ListaUsuariosComponent, ListaTurnosComponent],
   imports: [
     CommonModule,
     TurnosRoutingModule,

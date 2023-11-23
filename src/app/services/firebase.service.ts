@@ -28,12 +28,29 @@ interface Especialista {
   // Agrega otras propiedades según tus datos
 }
 
+interface Users {
+  id: string;
+  email: string;
+  imagen: string;
+  // Agrega otras propiedades según tus datos
+}
+
 interface Turnos {
   id_especialista: string;
   especialista: string;
   especialidad: string;
   paciente: string;
   // Agrega otras propiedades según tus datos
+}
+
+interface Resena {
+  id_especialista: string;
+  especialista: string;
+  especialidad: string;
+  paciente: string;
+  diagnostico: string;
+  estrellas: string;
+  estado: string;
 }
 
 @Injectable({
@@ -57,6 +74,13 @@ export class FirebaseService {
   getUser() {
     const email = this.auth.currentUser?.email;
     const usuarios = collection(this.firestore, 'users');
+    const q = query(usuarios, where('email', '==', email));
+
+    return collectionData(q, { idField: 'id' });
+  }
+
+  getUserTurnos(email: string) {
+    const usuarios = collection(this.firestore, 'turno');
     const q = query(usuarios, where('email', '==', email));
 
     return collectionData(q, { idField: 'id' });
@@ -93,6 +117,22 @@ export class FirebaseService {
     return collectionData(q, { idField: 'id' }) as Observable<Turnos[]>;
   }
 
+  getDataTurnosUsuario(base: string, email: string): Observable<Turnos[]> {
+    const usuarios = collection(this.firestore, base);
+    const q = query(
+      usuarios,
+      where('estado', '==', 'inactivo'),
+      where('paciente', '==', email)
+    );
+
+    return collectionData(q, { idField: 'id' }) as Observable<Turnos[]>;
+  }
+
+  getDataResena(base: string): Observable<Resena[]> {
+    const usuarios = collection(this.firestore, base);
+    const q = query(usuarios, where('estado', '==', 'finalizado'));
+    return collectionData(q, { idField: 'id' }) as Observable<Resena[]>;
+  }
   async actualizarDato(base: string, data: any) {
     data.forEach((element: any) => {
       const instanciaDoc = doc(this.firestore, base, element.id);

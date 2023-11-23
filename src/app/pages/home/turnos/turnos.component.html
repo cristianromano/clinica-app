@@ -26,5 +26,28 @@
         Pedir Turno
       </button>
     </div>
+
+    <ng-container></ng-container>
+    <ng-container *ngIf="esAdmin">
+      <app-lista-usuarios
+        (user)="obtenerUser($event)"
+        formControlName="user"
+      ></app-lista-usuarios>
+    </ng-container>
+  </div>
+  <div class="turnoVentana">
+    <app-lista-turnos
+      [userTurno]="userTurno"
+      (turnoUser)="obtenerUserTurno($event)"
+      formControlName="userTurno"
+    ></app-lista-turnos>
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      (click)="eliminarTurno()"
+    >
+      Cancelar
+    </button>
   </div>
 </form>

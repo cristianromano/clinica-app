@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth.service';
@@ -15,6 +15,10 @@ export class TurnosComponent implements OnInit {
   maxDate?: Date;
   userForm!: FormGroup;
   especialista: any = [];
+  user: any = [];
+  esAdmin: boolean = false;
+  userTurno?: any;
+  turnoUser: any = [];
   constructor(
     private firestore: FirebaseService,
     private auth: AuthService,
@@ -31,7 +35,21 @@ export class TurnosComponent implements OnInit {
     quinceDiasDespues.setDate(hoy.getDate() + 15);
     this.maxDate = quinceDiasDespues;
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.firestore
+      .verificarAdmin('admin', this.auth.auth.currentUser?.email)
+      .then((e) => {
+        if (e == true) {
+          this.esAdmin = true;
+          this.userForm.addControl(
+            'user',
+            new FormControl(null, [Validators.required])
+          );
+        }
+      });
+
+    this.userTurno = this.auth.auth.currentUser?.email;
+  }
 
   obtenerEspecialista($event: any) {
     console.log($event);
@@ -44,23 +62,72 @@ export class TurnosComponent implements OnInit {
     }
   }
 
+  obtenerUser($event: any) {
+    console.log($event);
+    if (this.user !== $event) {
+      this.user = $event;
+      this.userForm.get('user')?.setValue($event);
+    } else {
+      this.user = null;
+      this.userForm.get('user')?.setValue(null);
+    }
+  }
+
+  obtenerUserTurno($event: any) {
+    if (this.turnoUser !== $event) {
+      this.turnoUser = $event;
+      this.userForm.addControl(
+        'userTurno',
+        new FormControl(null, [Validators.required])
+      );
+      this.userForm.get('userTurno')?.setValue($event);
+    } else {
+      this.userForm.removeControl('userTurno');
+      this.turnoUser = null;
+      this.userForm.get('userTurno')?.setValue(null);
+    }
+  }
+
   handleDateChange(event: any) {
     this.userForm.get('fecha')?.setValue(event);
   }
 
+  eliminarTurno() {
+    debugger;
+    const data = [this.turnoUser];
+    this.firestore.eliminarDato('turno', data);
+  }
+
   onSubmit() {
-    const data = {
-      paciente: this.auth.auth.currentUser?.email,
-      id_especialista: this.especialista.id,
-      especialista: this.especialista.email,
-      especialidad: this.especialista.especialidad,
-      estado: 'inactivo',
-      fecha: this.userForm.get('fecha')?.value,
-    };
-    this.firestore.setData(data, 'turno').then((e) => {
-      console.log(e);
-      this.userForm.reset();
-      this.toast.show('se registro turno', 'Gestion de turnos');
-    });
+    if (this.esAdmin) {
+      const data = {
+        paciente: this.user.email,
+        id_especialista: this.especialista.id,
+        especialista: this.especialista.email,
+        especialidad: this.especialista.especialidad,
+        estado: 'inactivo',
+        fecha: this.userForm.get('fecha')?.value,
+      };
+
+      this.firestore.setData(data, 'turno').then((e) => {
+        console.log(e);
+        this.userForm.reset();
+        this.toast.show('se registro turno', 'Gestion de turnos');
+      });
+    } else {
+      const data = {
+        paciente: this.auth.auth.currentUser?.email,
+        id_especialista: this.especialista.id,
+        especialista: this.especialista.email,
+        especialidad: this.especialista.especialidad,
+        estado: 'inactivo',
+        fecha: this.userForm.get('fecha')?.value,
+      };
+      this.firestore.setData(data, 'turno').then((e) => {
+        console.log(e);
+        this.userForm.reset();
+        this.toast.show('se registro turno', 'Gestion de turnos');
+      });
+    }
   }
 }

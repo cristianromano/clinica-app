@@ -13,9 +13,10 @@ import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { ResenaComponent } from './resena/resena.component';
 
 @NgModule({
-  declarations: [TurnosEspecialistaComponent, ListaTurnosComponent],
+  declarations: [TurnosEspecialistaComponent, ListaTurnosComponent, ResenaComponent],
   imports: [
     CommonModule,
     TurnosEspecialistaRoutingModule,

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { FirebaseService } from 'src/app/services/firebase.service';
 
@@ -15,16 +15,20 @@ interface Turnos {
   styleUrls: ['./lista-turnos.component.scss'],
 })
 export class ListaTurnosComponent {
+  @Input() userTurno: any;
+
   dataSource!: MatTableDataSource<Turnos>;
   displayedColumns: string[] = ['especialidad', 'paciente', 'estado'];
   clickedRows = new Set<Turnos>();
   users: any = [];
-  @Output() especialista = new EventEmitter<void>();
+  @Output() turnoUser = new EventEmitter<void>();
 
   ngOnInit(): void {
-    this.firestore.getDataTurnos('turno').subscribe((data: Turnos[]) => {
-      this.dataSource = new MatTableDataSource(data);
-    });
+    this.firestore
+      .getDataTurnosUsuario('turno', this.userTurno)
+      .subscribe((data: Turnos[]) => {
+        this.dataSource = new MatTableDataSource(data);
+      });
   }
 
   applyFilter(event: Event) {
@@ -45,7 +49,7 @@ export class ListaTurnosComponent {
   gestionarTurno($event: any, row: any) {
     let entriesArray = Array.from($event);
     debugger;
-    this.especialista.emit(row);
+    this.turnoUser.emit(row);
     const exists = this.users.some((user: any) => user.id === row['id']);
     if (exists) {
       this.users = this.users.filter((user: any) => user.id !== row['id']);

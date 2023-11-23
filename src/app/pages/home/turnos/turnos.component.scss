@@ -19,5 +19,12 @@
   display: flex;
   flex-direction: row;
   gap: 16px; /* Espacio entre la lista y el calendario */
-  border: 5px solid black;
+}
+
+.turnoVentana {
+  position: absolute;
+  max-width: 500px;
+  max-height: 500px;
+  top: 100px;
+  left: 800px;
 }

@@ -81,6 +81,15 @@
           formControlName="comentario"
         ></textarea>
       </mat-form-field>
+      <p>Diagnostico</p>
+      <mat-form-field style="width: 100%; height: 100%">
+        <mat-label>Deja un diagnostico</mat-label>
+        <textarea
+          matInput
+          style="resize: none"
+          formControlName="diagnostico"
+        ></textarea>
+      </mat-form-field>
       <div>
         <mat-icon
           fontIcon="stars"
@@ -102,4 +111,5 @@
       </button>
     </div>
   </ng-container>
+  <app-resena></app-resena>
 </form>
